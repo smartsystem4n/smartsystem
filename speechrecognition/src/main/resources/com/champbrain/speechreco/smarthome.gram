@@ -1,0 +1,19 @@
+#JSGF V1.0;
+
+grammar smarthome;
+<digit> = one   |
+          two   |
+          three |
+          four  |
+          five  |
+          six   ;
+<start> = [hello] smart home;
+<switch_start> = switch <digit> start;
+<switch_stop> = switch <digit> stop;
+<switch_start_1> = start switch <digit>;
+<switch_stop_1> = stop switch <digit>;
+<yes> = yes;
+<no> = no;
+
+
+public <command> = <start> | <switch_start> | <switch_stop> | <switch_start_1> | <switch_stop_1>;
