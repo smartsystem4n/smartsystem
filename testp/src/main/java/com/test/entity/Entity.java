@@ -3,8 +3,8 @@ package com.test.entity;
 public abstract class Entity {
 
 	private String id;
-	private State state;
 	private String label;
+	private int sequenceNo;
 	private String imagePath;
 
 	public String getImagePath() {
@@ -23,19 +23,19 @@ public abstract class Entity {
 		this.id = id;
 	}
 
-	public State getState() {
-		return state;
-	}
-
-	public void setState(State state) {
-		this.state = state;
-	}
-
 	public String getLabel() {
 		return label;
 	}
 
 	public void setLabel(String label) {
 		this.label = label;
+	}
+
+	public int getSequenceNo() {
+		return sequenceNo;
+	}
+
+	public void setSequenceNo(int sequenceNo) {
+		this.sequenceNo = sequenceNo;
 	}
 }

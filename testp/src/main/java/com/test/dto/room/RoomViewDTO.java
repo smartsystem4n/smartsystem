@@ -6,7 +6,7 @@ import com.test.entity.Fan;
 import com.test.entity.Light;
 import com.test.entity.Room;
 
-public class RoomViewDTO {
+public class RoomViewDTO {	
 	private Room room;
 	private List<Light> lights;
 	private List<Fan> fans;
@@ -28,5 +28,4 @@ public class RoomViewDTO {
 	public void setFans(List<Fan> fans) {
 		this.fans = fans;
 	}
-	
 }
