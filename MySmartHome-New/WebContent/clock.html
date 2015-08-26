@@ -1,0 +1,50 @@
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+<script type="text/javascript" src="resources/js/clock/anim-library.js"></script>
+<script type="text/javascript" src="resources/js/clock/html5clocks.js"></script>
+<script type="text/javascript" src="resources/js/clock/html5-008.js"></script>
+<script type="text/javascript">
+		var clockCanvasId="clock" ;
+		var clock,animFrame;
+		var animFrame = new AnimFrame();
+		clock = new Clock(
+		new BaseClock(
+		null,
+		null,
+		null,
+		null,
+		null,
+		null,
+		null),
+		"/clocks/HTML5/",
+		"",
+		"",
+		"",
+		{
+		clock : 'clock',
+		timezone : 'local',
+		color : 'black',
+		size : '227',
+		Title : '',
+		Message : '',
+		Target : '',
+		From : '2015,1,1,0,0,0',
+		Color : 'black'});
+		animFrame.push(clock);
+		animFrame.start();
+		
+</script>
+<style type="text/css">
+body {
+	margin: 0px;
+	padding: 0px;
+}
+</style>
+
+</head>
+<body>
+	
+</body>
+</html>
