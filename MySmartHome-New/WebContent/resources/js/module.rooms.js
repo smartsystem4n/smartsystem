@@ -20,11 +20,14 @@
 
 				var $this = $(this);
 				$this.data(settingsObject);
-				
-				$this.find('.smartHomeAction').on('toggle', function(event, state) {
-					  console.log(state); // true | false
-					  performAction($(this),state, $this.data("servicePath"));
-				});
+
+				$this.find('.smartHomeAction').on(
+						'toggle',
+						function(event, state) {
+							console.log(state); // true | false
+							performAction($(this), state, $this
+									.data("servicePath"));
+						});
 			});
 		},
 
@@ -61,38 +64,45 @@
 			 * _scrollPane.jScrollPane(); }
 			 */
 		},
-		render : function render(options) {
-			return this.each(function() {										
+		render : function(options) {
+			return this.each(function() {
 				var $this = $(this);
 				services = $this.data("servicePath");
-				var viewRoomsServiceURL = services.viewRoomsService;
-				var options = {
-					url : viewRoomsServiceURL,
-					dataType : 'json',
-					async : false,
-					cache : false,
-					success : function(data) {
-						renderRooms(data);
-					}
+				var doStuff = function() {
+					console.log("test");
+					var viewRoomsServiceURL = services.viewRoomsService;
+					var options = {
+						url : viewRoomsServiceURL,
+						dataType : 'json',
+						async : false,
+						cache : false,
+						success : function(data) {
+							renderRooms(data);
+						}
+					};
+					appGet(options);
+
 				};
-				appGet(options);
+				setInterval(doStuff, 2000);
 			});
 		}
 	};
-	
 
 	$.fn.showRooms = function(method, houseHoldObj, options) {
 		// Method calling logic
 		if (methods[method]) {
 			if (method !== 'init') {
-				if ($(this).data().settings === undefined || $(this).data().settings == null) {
+				if ($(this).data().settings === undefined
+						|| $(this).data().settings == null) {
 					$.error('The showGrid module has not been initialized!');
 				}
 			}
-			return methods[method].apply(this, Array.prototype.slice.call(arguments, 1));
+			return methods[method].apply(this, Array.prototype.slice.call(
+					arguments, 1));
 
 		} else if (typeof method === 'object' || !method) {
-			return methods.init.apply(this, Array.prototype.slice.call(arguments, 2));
+			return methods.init.apply(this, Array.prototype.slice.call(
+					arguments, 2));
 
 		} else {
 			$.error('Method ' + method + ' does not exist on jQuery.tooltip');
@@ -104,29 +114,29 @@
 function renderRooms(data) {
 	if (isDefined(data)) {
 		renderRoom1(data[0]);
-		//renderRoom2(data[1]);
+		// renderRoom2(data[1]);
 	}
 }
 
 function renderRoom1(roomData) {
 	if (isDefined(roomData)) {
-		//$("#room1Name").html(roomData.room.label);
+		// $("#room1Name").html(roomData.room.label);
 		var sequenceNo = 1;
 		var lights = roomData.lights;
 		if (isDefined(lights) && lights.length > 0) {
 			$.each(lights, function(key, light) {
 				var btn = "room1Btn" + sequenceNo;
 				sequenceNo++;
-				//var div = btn + "Div";
-				//var lbl = btn + "Label";
-				//$('#' + div).show();
-				//$('#' + lbl).html(light.label);
+				// var div = btn + "Div";
+				// var lbl = btn + "Label";
+				// $('#' + div).show();
+				// $('#' + lbl).html(light.label);
 				$('#' + btn).data("devId", light.id).data('devType', 'light');
 				if (isDefined(light.state) && light.state == 'ON') {
-					//$('#' + btn).bootstrapSwitch('state', true);
+					// $('#' + btn).bootstrapSwitch('state', true);
 					$('#' + btn).data('toggles').toggle(true, true, true);
 				} else {
-					//$('#' + btn).bootstrapSwitch('state', false);
+					// $('#' + btn).bootstrapSwitch('state', false);
 					$('#' + btn).data('toggles').toggle(false, true, true);
 				}
 			});
@@ -138,14 +148,14 @@ function renderRoom1(roomData) {
 				sequenceNo++;
 				var div = btn + "Div";
 				var lbl = btn + "Label";
-				//$('#' + div).show();
-				//$('#' + lbl).html(fan.label);
+				// $('#' + div).show();
+				// $('#' + lbl).html(fan.label);
 				$('#' + btn).data("devId", fan.id).data('devType', 'fan');
 				if (isDefined(fan.state) && fan.state == 'ON') {
-					//$('#' + btn).bootstrapSwitch('state', true);
+					// $('#' + btn).bootstrapSwitch('state', true);
 					$('#' + btn).data('toggles').toggle(true, true, true);
 				} else {
-					//$('#' + btn).bootstrapSwitch('state', false);
+					// $('#' + btn).bootstrapSwitch('state', false);
 					$('#' + btn).data('toggles').toggle(false, true, true);
 				}
 			});
@@ -155,7 +165,7 @@ function renderRoom1(roomData) {
 
 function renderRoom2(roomData) {
 	if (isDefined(roomData)) {
-		//$("#room1Name").html(roomData.room.label);
+		// $("#room1Name").html(roomData.room.label);
 		var sequenceNo = 1;
 		var lights = roomData.lights;
 		if (isDefined(lights) && lights.length > 0) {
@@ -194,14 +204,14 @@ function renderRoom2(roomData) {
 	}
 }
 
-function performAction($element,state, services) {
+function performAction($element, state, services) {
 	var $this = $(this);
 	if (state) {
 		state = "ON";
 	} else {
 		state = "OFF";
 	}
-	//services = $this.data("servicePath");
+	// services = $this.data("servicePath");
 	var viewRoomsServiceURL;
 	var type = $element.data('devType');
 	{
@@ -211,7 +221,8 @@ function performAction($element,state, services) {
 			viewRoomsServiceURL = services.updateFan;
 		}
 	}
-	viewRoomsServiceURL = viewRoomsServiceURL + $element.data('devId') + "/" + state;
+	viewRoomsServiceURL = viewRoomsServiceURL + $element.data('devId') + "/"
+			+ state;
 	var options = {
 		url : viewRoomsServiceURL,
 		dataType : 'json',
