@@ -69,7 +69,6 @@
 				var $this = $(this);
 				services = $this.data("servicePath");
 				var doStuff = function() {
-					console.log("test");
 					var viewRoomsServiceURL = services.viewRoomsService;
 					var options = {
 						url : viewRoomsServiceURL,
