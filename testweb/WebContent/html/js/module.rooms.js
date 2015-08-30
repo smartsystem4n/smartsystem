@@ -62,21 +62,24 @@
 			 */
 		},
 		render : function(options) {
-			return this.each(function() {				
-				$(".myBtns").bootstrapSwitch();				
+			return this.each(function() {
 				var $this = $(this);
 				services = $this.data("servicePath");
-				var viewRoomsServiceURL = services.viewRoomsService;
-				var options = {
-					url : viewRoomsServiceURL,
-					dataType : 'json',
-					async : false,
-					cache : false,
-					success : function(data) {
-						renderRooms(data);
-					}
+				var doStuff = function() {
+					var viewRoomsServiceURL = services.viewRoomsService;
+					var options = {
+						url : viewRoomsServiceURL,
+						dataType : 'json',
+						async : false,
+						cache : false,
+						success : function(data) {
+							renderRooms(data);
+						}
+					};
+					appGet(options);
+
 				};
-				appGet(options);
+				setInterval(doStuff, 2000);
 			});
 		}
 	};
@@ -140,9 +143,9 @@ function renderRoom1(roomData) {
 				$('#' + lbl).html(fan.label);
 				$('#' + btn).data("devId", fan.id).data('devType', 'fan');
 				if (isDefined(fan.state) && fan.state == 'ON') {
-					$('#' + btn).bootstrapSwitch('state', true);
+					$('#' + btn).bootstrapSwitch('state', true,true);
 				} else {
-					$('#' + btn).bootstrapSwitch('state', false);
+					$('#' + btn).bootstrapSwitch('state', false,true);
 				}
 			});
 		}
@@ -164,9 +167,9 @@ function renderRoom2(roomData) {
 				$('#' + lbl).html(light.label);
 				$('#' + btn).data("devId", light.id).data('devType', 'light');
 				if (isDefined(light.state) && light.state == 'ON') {
-					$('#' + btn).bootstrapSwitch('state', true);
+					$('#' + btn).bootstrapSwitch('state', true,true);
 				} else {
-					$('#' + btn).bootstrapSwitch('state', false);
+					$('#' + btn).bootstrapSwitch('state', false,true);
 				}
 			});
 		}
