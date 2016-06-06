@@ -1,6 +1,4 @@
 <!DOCTYPE html>
-<%@page import="com.chmapbrains.smart.system.home.SwitchInfo"%>
-<%@page import="com.chmapbrains.smart.system.component.Switch"%>
 <html>
 
 <head>

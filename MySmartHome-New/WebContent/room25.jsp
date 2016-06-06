@@ -13,7 +13,7 @@
 
 <link href="resources/css/font-awesome.min.css" rel="stylesheet"
 	type="text/css">
-<link href="resources/css/bootswatch/superhero/bootstrap.css"
+<link href="resources/css/bootswatch/slate/bootstrap.css"
 	rel="stylesheet" type="text/css" />
 
 
@@ -32,7 +32,7 @@
 <!-- start: https://github.com/simontabor/jquery-toggles/ -->
 <script type="text/javascript">
 	$('body').ready(function() {
-		document.body.style.cursor = 'none';
+		//document.body.style.cursor = 'none';
 
 		$('.toggle').toggles({
 			drag : true, // allow dragging the toggle between positions
@@ -50,14 +50,13 @@
 			height : 50, // height if not set in css
 			type : 'compact' // if this is set to 'select' then the select style toggle will be used
 		});
-
 	});
 </script>
 <script type="text/javascript" src="resources/js/gateway.manager.js"></script>
 <script type="text/javascript" src="resources/js/page.manager.js"></script>
 <script type="text/javascript" src="resources/js/core.js"></script>
 <script type="text/javascript" src="resources/js/page.sandbox.js"></script>
-<script type="text/javascript" src="resources/js/module.rooms.js"></script>
+<script type="text/javascript" src="resources/js/module.rooms.new.js"></script>
 <script type="text/javascript" src="resources/js/ajaxLoader.js"></script>
 <script type="text/javascript" src="resources/js/commonsAjax.js"></script>
 <style type="text/css">
@@ -69,6 +68,9 @@ div {
 	-ms-user-select: none;
 	-o-user-select: none;
 	user-select: none;
+	user-drag: none; 
+	-moz-user-select: none;
+	-webkit-user-drag: none;
 }
 </style>
 </head>
@@ -94,7 +96,7 @@ div {
 			</div>
 		</div>
 	</div>
-	<%@ include file="button-theme2.jsp"%>
+	<%@ include file="button-theme5.jsp"%>
 	<div id="footer">
 		<%@ include file="footer.jsp"%>
 	</div>
