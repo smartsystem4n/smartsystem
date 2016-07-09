@@ -468,14 +468,15 @@ export QT_LOGGING_RULES=qt.qpa.*=true
 export LD_PRELOAD="/opt/vc/lib/libGLESv2.so /opt/vc/lib/libEGL.so"
 export QT_QPA_EGLFS_DEPTH=24
 export LIBGL_DEBUG=verbose
-if [ -z $qt_sh_load ]
+
+SMART_HOME_PID=$(pidof SmartSystemWebBrowser-QTQuick)
+if [ -z $SMART_HOME_PID ]
 then
         nohup /home/pi/SmartSystemWebBrowser-QTQuick -plugin evdevmouse:/dev/input/event1 &
-        export qt_sh_load=true
 else
         echo "qt smart home alreaddy loaded!!!"
 fi
-
+export SMART_HOME_LOAD=true
 
 2) AND add line in ~.bashrc
 /home/pi/runqtSamrthome.sh
