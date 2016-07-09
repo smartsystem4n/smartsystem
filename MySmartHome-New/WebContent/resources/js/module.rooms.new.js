@@ -23,11 +23,24 @@
 				$this.data(settingsObject);
 
 				$this.find('.smartHomeAction').on(
-						'toggle',
-						function(event, state) {
-							console.log(state); // true | false
-							performAction($(this), state, $this
-									.data("servicePath"));
+						'click',
+						function(event) {
+							//console.log(state); // true | false
+							var state = $(this).data("state");
+							if(!$(this).hasClass("fanSpeed"))
+							{
+								performAction($(this), state, $this
+										.data("servicePath"));
+							}
+							else
+							{
+								// it is fan speed controller
+								var speed =$.trim($(this).html().replace(/&nbsp;/g, '')) ;
+								var state = $(this).data("state");
+								performFanSpeedAction($(this), state,speed, $this
+										.data("servicePath"));
+							}
+							
 						});
 			});
 		},
@@ -83,8 +96,8 @@
 					appGet(options);
 
 				};
-				doStuff() ;
-				setInterval(doStuff, 2000);
+				doStuff();
+				setInterval(doStuff, 10000);
 			});
 		}
 	};
@@ -125,9 +138,9 @@ function renderRoomsByType(type,data) {
 		//renderRoom1(data[0]);
 		// renderRoom2(data[1]);
 		if (isDefined(type) && 'light' == type) {
-			//updateLightRoom1(data) ;
+			updateLightRoom1(data) ;
 		} else if (isDefined(type) && 'fan' == type) {
-			//updateFanRoom1(data);
+			updateFanRoom1(data);
 		}
 	}
 }
@@ -139,7 +152,7 @@ function renderRoom1(roomData) {
 		var lights = roomData.lights;
 		if (isDefined(lights) && lights.length > 0) {
 			$.each(lights, function(key, light) {
-				updateLightRoom1(light) ;
+				updateLightRoom1(light);
 			});
 		}
 		var fans = roomData.fans;
@@ -150,6 +163,7 @@ function renderRoom1(roomData) {
 		}
 	}
 }
+
 function updateLightRoom1(light)
 {
 	var btn = "room1BtnLight" + light.sequenceNo;
@@ -158,15 +172,18 @@ function updateLightRoom1(light)
 	// var lbl = btn + "Label";
 	// $('#' + div).show();
 	// $('#' + lbl).html(light.label);
-	$('#' + btn).data("devId", light.id).data('devType', 'light');
+	$('#' + btn).find("img").data("devId", light.id).data('devType', 'light');
 	if (isDefined(light.state) && light.state == 'ON') {
 		// $('#' + btn).bootstrapSwitch('state', true);
-		$('#' + btn).data('toggles').toggle(true, true, true);
+		$('#' + btn).find("img").attr("src","resources/img/lighting_white48px.png");
+		$('#' + btn).find("img").data("state",false);// next stage
 	} else {
 		// $('#' + btn).bootstrapSwitch('state', false);
-		$('#' + btn).data('toggles').toggle(false, true, true);
+		$('#' + btn).find("img").attr("src","resources/img/lightingalt_white48px.png");
+		$('#' + btn).find("img").data("state",true);// next stage
 	}
 }
+
 function updateFanRoom1(fan)
 {
 	var btn = "room1BtnFan" + fan.sequenceNo;
@@ -175,73 +192,27 @@ function updateFanRoom1(fan)
 	var lbl = btn + "Label";
 	// $('#' + div).show();
 	// $('#' + lbl).html(fan.label);
-	$('#' + btn).data("devId", fan.id).data('devType', 'fan');
+	$('#' + btn).find("img").data("devId", fan.id).data('devType', 'fan');
+	$('#' + btn).find(".fanSpeed").data("devId", fan.id).data('devType', 'fanSpeed');
 	if (isDefined(fan.state) && fan.state == 'ON') {
-		// $('#' + btn).bootstrapSwitch('state', true);
-		$('#' + btn).data('toggles').toggle(true, true, true);
+		// $('#' + btn).bootstrapSwitch('state', true);					
+		$('#' + btn).find("img").attr("src","resources/img/myfan.gif");
+		$('#' + btn).find("img").data("state",false);// next stage
 	} else {
-		// $('#' + btn).bootstrapSwitch('state', false);
-		$('#' + btn).data('toggles').toggle(false, true, true);
-	}
-}
-
-function renderRoom2(roomData) {
-	if (isDefined(roomData)) {
-		// $("#room1Name").html(roomData.room.label);
-		//var sequenceNo = 1;
-		var lights = roomData.lights;
-		if (isDefined(lights) && lights.length > 0) {
-			$.each(lights, function(key, light) {
-				updateLightRoom2(light);
-			});
-		}
-		var fans = roomData.fans;
-		if (isDefined(fans) && fans.length > 0) {
-			$.each(fans, function(key, fan) {
-				updateFanRoom2(fan);
-			});
-		}
-	}
-}
-
-function updateFanRoom2(fan)
-{
-	var btn = "room2BtnFan" + fan.sequenceNo;
-	//sequenceNo++;
-	var div = btn + "Div";
-	var lbl = btn + "Label";
-	$('#' + div).show();
-	$('#' + lbl).html(fan.label);
-	$('#' + btn).data("devId", fan.id).data('devType', 'fan');
-	if (isDefined(fan.state) && fan.state == 'ON') {
-		$('#' + btn).bootstrapSwitch('state', true);
-	} else {
-		$('#' + btn).bootstrapSwitch('state', false);
-	}
-}
-
-function updateLightRoom2(light)
-{
-	var btn = "room2BtnLight" + light.sequenceNo;
-	//sequenceNo++;
-	var div = btn + "Div";
-	var lbl = btn + "Label";
-	$('#' + div).show();
-	$('#' + lbl).html(light.label);
-	$('#' + btn).data("devId", light.id).data('devType', 'light');
-	if (isDefined(light.state) && light.state == 'ON') {
-		$('#' + btn).bootstrapSwitch('state', true);
-	} else {
-		$('#' + btn).bootstrapSwitch('state', false);
-	}
+		// $('#' + btn).bootstrapSwitch('state', false);					
+		$('#' + btn).find("img").attr("src","resources/img/myfan.png");
+		$('#' + btn).find("img").data("state",true);// next stage
+	}	
 }
 
 function performAction($element, state, services) {
 	var $this = $(this);
 	if (state) {
 		state = "ON";
+		$element.data("state",false);// next stage
 	} else {
 		state = "OFF";
+		$element.data("state",true);// next stage
 	}
 	// services = $this.data("servicePath");
 	var viewRoomsServiceURL;
@@ -255,6 +226,29 @@ function performAction($element, state, services) {
 	}
 	viewRoomsServiceURL = viewRoomsServiceURL + $element.data('devId') + "/"
 			+ state;
+	var options = {
+		url : viewRoomsServiceURL,
+		dataType : 'json',
+		async : false,
+		cache : false,
+		success : function(data) {
+			renderRoomsByType(type,data);
+		}
+	};
+	appGet(options);
+}
+
+function performFanSpeedAction($element, state, speed, services) {
+	var $this = $(this);
+	
+	var type = $element.data('devType');
+	{
+		if (isDefined(type) && 'fanSpeed' == type) {
+			viewRoomsServiceURL = services.updateFanSpeed;
+		} 
+	}
+	viewRoomsServiceURL = viewRoomsServiceURL + $element.data('devId') + "/"
+			+ speed;
 	var options = {
 		url : viewRoomsServiceURL,
 		dataType : 'json',
