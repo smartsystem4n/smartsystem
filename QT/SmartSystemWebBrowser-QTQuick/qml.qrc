@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml_old</file>
+        <file>MainForm.ui.qml</file>
+        <file>Splash.qml</file>
+        <file>creative_brain_animated---Copy---Copy-new.gif</file>
+        <file>qt-logo.png</file>
+        <file>main.qml</file>
+    </qresource>
+</RCC>

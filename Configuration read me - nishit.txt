@@ -1,0 +1,482 @@
+check sensible-browser
+http://ubuntuforums.org/showthread.php?t=2212948
+1)  sudo update-alternatives --config x-www-browser
+	
+2) sudo update-alternatives --install  /usr/bin/x-www-browser x-www-browser /usr/bin/chromium 250
+
+OR final one 
+/usr/bin/chromium --kiosk http://127.0.0.1:8080/
+
+http://stackoverflow.com/questions/12973777/how-to-run-a-shell-script-at-startup
+
+http://www.raspberry-projects.com/pi/pi-operating-systems/raspbian/gui/auto-run-browser-on-startup
+
+
+create a file to start chrome but chrome is too slow so not to use
+vim controlunit.sh
+add below line
+/usr/bin/chromium --kiosk http://127.0.0.1:8080/
+
+add that to /etc/xdg/lxsession/LXDE-pi/autostart file "vim /etc/xdg/lxsession/LXDE-pi/autostart"
+@sh /home/pi/Desktop/controlroom.sh
+
+Ref: http://www.antony-neu.com/2013/03/12/autostarting-a-browser-on-the-raspberry-pi/
+http://raspberrypi.stackexchange.com/questions/26783/auto-startup-of-the-midori-web-browser-is-not-working-on-raspberry-pi
+
+######################################################
+
+start tomcat on startup ( not done need to search in google)
+1) http://askubuntu.com/questions/223944/how-to-automatically-restart-tomcat7-on-system-reboots
+create file in /etc/init.d folder
+1) tomcat
+#!/bin/bash
+
+### BEGIN INIT INFO
+# Provides:        tomcat8
+# Required-Start:  $network
+# Required-Stop:   $network
+# Default-Start:   2 3 4 5
+# Default-Stop:    0 1 6
+# Short-Description: Start/Stop Tomcat server
+### END INIT INFO
+
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+CATALINA_HOME="/usr/share/tomcat"
+
+start() {
+ sh $CATALINA_HOME/bin/startup.sh
+}
+
+stop() {
+ sh $CATALINA_HOME/bin/shutdown.sh
+}
+
+case $1 in
+  start|stop) $1;;
+  restart) stop; start;;
+  *) echo "Run as $0 <start|stop|restart>"; exit 1;;
+esac
+
+---
+after that 
+1) sudo chmod 755  /usr/share/tomcat/bin/*.sh
+2) sudo chmod 755 /etc/init.d/tomcat
+3) sudo update-rc.d tomcat defaults
+###############################
+http://www.raspberry-projects.com/pi/pi-operating-systems/raspbian/gui/disable-screen-sleep
+https://www.raspberrypi.org/forums/viewtopic.php?f=91&t=57552
+-- remove as 1) sudo apt-get install xscreensaver -- this add screen saver and that never stop
+2) sudo vim /etc/lightdm/lightdm.conf
+# don't sleep the screen
+xserver-command=X -s 0 -dpms
+I have also updated
+vim /etc/kbd/config
+POWERDOWN_TIME=30 to POWERDOWN_TIME=0
+
+##########################
+WIFI
+vim /etc/network/interfaces
+Add:
+wireless-power off
+and sudo reboot
+
+###########################
+install wiringpi
+1) sudo apt-get install git-core
+2) git clone git://git.drogon.net/wiringPi
+3) cd wiringPi
+4) ./build
+
+############ pin configuration #########
+https://www.raspberrypi.org/documentation/configuration/pin-configuration.md --- still need to check
+
+https://www.element14.com/community/servlet/JiveServlet/previewBody/73950-102-4-309126/GPIO_Pi2.png
+
+
+
+---------------- rewrite------------------
+
+open /boot/config.txt file and add below line for screen
+max_usb_current=1
+hdmi_group=2
+#hdmi_mode=1
+#hdmi_drive=2
+hdmi_mode=87
+hdmi_cvt 800 480 60 6 0 0 0
+
+install QT
+http://famedsolutions.com/index.php/2015/05/02/installing-qt5-on-debian-jessie/
+https://packages.debian.org/jessie/qt5-default
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get install qt5-default
+sudo apt-get install qtcreator
+sudo apt-get install qtdeclarative5-dev
+sudo apt-get install qtmultimedia5-dev libqt5multimediawidgets5 libqt5multimedia5-plugins libqt5multimedia5
+sudo apt-get install libqt5webkit5-dev
+sudo apt-get install libqt5webkit5 libqt5webkit5-dev qml-module-qtwebkit
+sudo apt-get install libicu-dev libsqlite3-dev libxslt1-dev libssl-dev
+
+---- start: looks not needed----
+sudo apt-get update
+# To fix key error
+sudo apt-get install deb-multimedia-keyring
+sudo apt-get update
+sudo apt-get dist-upgrade 
+#sudo apt-get install gstreamer0.10-ffmpeg - not working
+sudo apt-get install gstreamer0.10-plugins-ugly
+sudo apt-get install gstreamer0.10-plugins-bad
+sudo apt-get install gstreamer0.10-plugins-good
+sudo apt-get install qtquick1-5-dev
+---- end: looks not needed----
+
+sudo apt-get install build-essential g++
+And Go to Tools>>Options>>Kits and set your preferred Compiler(32 or 64 bit) as follows:
+
+I have found image with qt5.6 so we dont need above steps 
+After instll I am getting error while sudo apt-get update
+Reading package lists... Error!
+
+solution:
+sudo rm -vf /var/lib/dpkg/status
+sudo cp /var/backups/dpkg.status.0 /var/lib/dpkg/status
+sudo apt-get update
+
+that I have tried
+
+-------------------------------------------
+RDC
+https://www.raspberrypi.org/documentation/remote-access/vnc/
+
+to use from windows ssh and run below command to open vnc on port 1
+vncserver :1 -geometry 1366x768 -depth 24
+
+curent password is "nishit"
+
+--------------------------------
+
+
+to solve touch issue use below one 
+approch 1) 
+https://github.com/derekhe/waveshare-7inch-touchscreen-driver
+
+Or I have downoaded in local
+F:\smart-system\touch scrine driver opensource\waveshare-7inch-touchscreen-driver-master
+
+copy zip or folder to /home/pi
+cd wavesahre-7inch-touchscreen-driver
+chmod +x install.sh
+sudo apt-get update
+sudo ./install.sh
+sudo restart
+
+approch 2) as above aproch ts lib not working we need to use below one
+https://github.com/saper-2/rpi-5inch-hdmi-touchscreen-driver
+Note: as our screen running on 25 not 22 we need to change below line in the touch.ph file
+b = f.read(22) to b = f.read(25)
+
+Also we need to install tslib that steps is in the above url but for old os google for jessy with tslib and get new steps
+
+-----------
+install mongodb
+sudo apt-get install mongodb
+-----------
+------------
+install wiringpi
+1) sudo apt-get install git-core
+2) git clone git://git.drogon.net/wiringPi
+3) cd wiringPi
+4) ./build
+
+------------
+tomcat
+http://stackoverflow.com/questions/27617158/tomcat-7-with-java-8-on-raspberry-pi
+
+login using putty
+1) 
+pi@raspberrypi:~ $ pwd
+/home/pi
+2) wget http://mirror.fibergrid.in/apache/tomcat/tomcat-8/v8.0.35/bin/apache-tomcat-8.0.35.tar.gz
+3) tar xvf apache-tomcat-8.0.35.tar.gz
+4) cd /etc/init.d
+5) sudo vim tomcat
+6) add below commands
+#!/bin/sh
+# /etc/init.d/tomcat
+# starts the Apache Tomcat service
+### BEGIN INIT INFO
+# Provides:          tomcat
+# Required-Start:
+# Required-Stop:
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# X-Interactive:     true
+# Short-Description: Start/stop tomcat application server
+### END INIT INFO
+
+export CATALINA_HOME="/home/pi/apache-tomcat-8.0.35"
+case "$1" in
+start)
+  if [ -f $CATALINA_HOME/bin/startup.sh ];
+  then
+    echo $"Starting Tomcat"
+    /bin/su pi $CATALINA_HOME/bin/startup.sh
+  fi
+  ;;
+stop)
+  if [ -f $CATALINA_HOME/bin/shutdown.sh ];
+  then
+    echo $"Stopping Tomcat"
+    /bin/su pi $CATALINA_HOME/bin/shutdown.sh
+  fi
+  ;;
+*)
+  echo $"Usage: $0 {start|stop}"
+  exit 1
+  ;;
+esac
+7) sudo chmod 777 tomcat
+8) sudo update-rc.d tomcat defaults
+----
+ sudo raspi-config
+As qt webkit is not working properly we need to enable opengl to do so use below
+"The OpenGL 2.1 GPU acceleration is not enabled by default. You have only the software rasterizer. To enable the OpenGL hadrware acceleration, launch the raspi-config (sudo raspi-config in a terminal) and go to Advanced Options > A9 GL Driver."
+--------------------
+vim /etc/kbd/config
+POWERDOWN_TIME=30 to POWERDOWN_TIME=0
+##########################
+WIFI
+vim /etc/network/interfaces
+Add:
+wireless-power off
+and sudo reboot
+----------
+sudo update-rc.d smartsystem remove
+---------------
+start smrt home qt application automatically
+https://www.raspberrypi.org/forums/viewtopic.php?p=344408#p344408
+check x settings
+http://blogs.wcode.org/2013/09/howto-boot-your-raspberry-pi-into-a-fullscreen-browser-kiosk/
+
+above xwindow option is altimate but still opengl liberay is not up to date so till time we need to use below option
+Ref: http://blog.startingelectronics.com/auto-start-a-desktop-application-on-the-rapberry-pi/
+cd ~/.config/lxsession/LXDE-pi
+vim autostart
+add at last
+@/home/pi/qtwork/SmartSystemWebBrowser-QTQuick/SmartSystemWebBrowser-QTQuick
+----------------
+install bcm2835
+wget http://www.open.com.au/mikem/bcm2835/bcm2835-1.49.tar.gz
+tar xvfz bcm2835-1.49.tar.gz
+cd bcm2835-1.49
+./configure
+make
+sudo make install
+
+
+----
+remvoe unwonted software
+remvoe :libreoffice
+sudo apt-get remove --purge libreoffice*
+sudo apt-get clean
+sudo apt-get autoremove
+
+
+--->>> compile chain for QT
+install chrome br and driver after this we will start install qt as per below steps
+1)
+chromium-browser
+wget https://dl.dropboxusercontent.com/u/87113035/chromium-browser-l10n_45.0.2454.85-0ubuntu0.15.04.1.1181_all.deb
+wget https://dl.dropboxusercontent.com/u/87113035/chromium-browser_45.0.2454.85-0ubuntu0.15.04.1.1181_armhf.deb
+wget https://dl.dropboxusercontent.com/u/87113035/chromium-codecs-ffmpeg-extra_45.0.2454.85-0ubuntu0.15.04.1.1181_armhf.deb
+sudo dpkg -i chromium-codecs-ffmpeg-extra_45.0.2454.85-0ubuntu0.15.04.1.1181_armhf.deb
+sudo dpkg -i chromium-browser-l10n_45.0.2454.85-0ubuntu0.15.04.1.1181_all.deb chromium-browser_45.0.2454.85-0ubuntu0.15.04.1.1181_armhf.deb
+
+2)  sudo apt-get install libfontconfig1-dev
+	sudo dpkg -i chromium-browser-l10n_45.0.2454.85-0ubuntu0.15.04.1.1181_all.deb chromium-browser_45.0.2454.85-0ubuntu0.15.04.1.1181_armhf.deb
+	sudo apt-get install libpoppler-dev
+	
+	sudo apt-get install "^libxcb.*" libx11-xcb-dev libglu1-mesa-dev libxrender-dev libxi-dev
+	
+	sudo apt-get install libasound2-dev libgstreamer0.10-dev libgstreamer-plugins-base0.10-dev
+	
+	sudo apt-get install bison build-essential gperf flex ruby python libasound2-dev libbz2-dev libcap-dev \
+libcups2-dev libdrm-dev libegl1-mesa-dev libgcrypt11-dev libnss3-dev libpci-dev libpulse-dev libudev-dev \
+libxtst-dev gyp ninja
+
+sudo apt-get install libfontconfig1-dev libdbus-1-dev libfreetype6-dev libudev-dev libicu-dev \
+  libsqlite3-dev libxslt1-dev libssl-dev libasound2-dev libavcodec-dev libavformat-dev libswscale-dev \
+  libgstreamer0.10-dev libgstreamer-plugins-base0.10-dev gstreamer-tools gstreamer0.10-plugins-good \
+  gstreamer0.10-plugins-bad libraspberrypi-dev libpulse-dev libx11-dev libglib2.0-dev libcups2-dev \
+  freetds-dev libsqlite0-dev libpq-dev libiodbc2-dev libmysqlclient-dev firebird-dev libpng12-dev \
+  libjpeg62-turbo-dev libgst-dev libxext-dev libxcb1 libxcb1-dev libx11-xcb1 libx11-xcb-dev libxcb-keysyms1 \
+  libxcb-keysyms1-dev libxcb-image0 libxcb-image0-dev libxcb-shm0 libxcb-shm0-dev libxcb-icccm4 \
+  libxcb-icccm4-dev libxcb-sync1 libxcb-sync-dev libxcb-render-util0 libxcb-render-util0-dev \
+  libxcb-xfixes0-dev libxrender-dev libxcb-shape0-dev libxcb-randr0-dev libxcb-glx0-dev libxi-dev \
+  libdrm-dev flex ruby gperf bison libts-dev libxcb-xinerama0 libxcb-xinerama0-dev
+
+  sudo apt-get install evtest tslib libts-bin - I did at last but we can do first for touch scrine not working in programe issue
+	on ubuntu
+	sudo apt-get install libcairo2-dev
+	sudo apt-get install gperf
+3)
+https://wiki.qt.io/RaspberryPi2EGLFS
+
+header file missing error : https://forum.qt.io/topic/62264/failed-to-cross-compile-qt-5-6-on-rpi-2-fatal-error-bcm_host-h-no-such-file-or-directory/4
+add 
+INCLUDEPATH += $$[QT_SYSROOT]/opt/vc/include
+INCLUDEPATH += $$[QT_SYSROOT]/opt/vc/include/interface/vcos
+INCLUDEPATH += $$[QT_SYSROOT]/opt/vc/include/interface/vcos/pthreads
+INCLUDEPATH += $$[QT_SYSROOT]/opt/vc/include/interface/vmcs_host/linux
+
+lines in qtbase/mkspecs/devices/linux-rasp-pi2-g++/qmake.conf file
+
+https://wiki.qt.io/Native_Build_of_Qt_5.4.1_on_a_Raspberry_Pi
+
+after that go to one by one folder and run below command
+qtimageformats, qtsvg, qtjsbackend, qtscript, qtxmlpatterns, qtdeclarative, qtsensors, qt3d, qtgraphicaleffects, qtjsondb, qtlocation, qtdocgallery
+~/raspi/qt5/bin/qmake
+make install
+Note: before install webengine install qtwebchannel, qtdeclarative, qtquickcontrols2, qtconnectivity
+
+I have found that touch is not working as aspected (caliber issue) but if we click on mouse pointer very first that is working after as needed
+I will going to create dummy event while QT programe running or in QT programe itself to work as aspected
+
+
+~/raspi/qt5/bin/qmake -r
+paplay /home/nishit/raspi/qtmultimedia/examples/multimedia/audioengine/qml/content/whistle.wav
+make clean
+paplay /home/nishit/raspi/qtmultimedia/examples/multimedia/audioengine/qml/content/whistle.wav
+make
+paplay /home/nishit/raspi/qtmultimedia/examples/multimedia/audioengine/qml/content/whistle.wav
+make install
+
+
+mkdir sysroot sysroot/usr sysroot/opt
+rsync -avz pi@192.168.0.150:/lib sysroot
+rsync -avz pi@192.168.0.150:/usr/include sysroot/usr
+rsync -avz pi@192.168.0.150:/usr/lib sysroot/usr
+rsync -avz pi@192.168.0.150:/opt/vc sysroot/opt
+./sysroot-relativelinks.py sysroot
+
+rsync -avz qt5pi pi@192.168.0.150:/usr/local
+
+scp qopenglwidget pi@192.168.0.150:/home/pi
+
+rsync -avz pi@192.168.0.150:/home/pi/Downloads/qt-opensource-linux-x64-5.6.1-1.run 
+
+qtwebengine not working but dont worry 
+
+Also add below parameter in /home/pi/.baserc file this needs to add for mouse
+
+# hides mouse cursor and disables EGL input
+# we can not use the built-in input handler because touch is not mouse, lol
+export QT_QPA_EGLFS_HIDECURSOR=1
+export QT_QPA_EGLFS_DISABLE_INPUT=1
+
+#export QT_QPA_EVDEV_TOUCHSCREEN_PARAMETERS=1
+
+# set physical display dimensions for proper font sizes etc.
+# Qt should print a warning if this is necessary
+#export QT_QPA_EGLFS_PHYSICAL_WIDTH=800
+#export QT_QPA_EGLFS_PHYSICAL_HEIGHT=480
+
+#export QT_QPA_FB_TSLIB=1
+#export QT_QPA_EGLFS_TSLIB=1
+
+ # enables tslib plugin for touch screen
+#export QT_QPA_GENERIC_PLUGINS=Tslib
+ # disables evdev mouse input (to avoid getting duplicated input from tslib AND evdev)
+#export QT_QPA_EVDEV_MOUSE_PARAMETERS=abs
+
+#export QWS_MOUSE_PROTO=Auto
+#export QWS_MOUSE_PROTO=Tslib:/dev/input/event1
+
+export TSLIB_TSEVENTTYPE=INPUT
+export TSLIB_CALIBFILE=/etc/pointercal
+export TSLIB_CONFFILE=/etc/ts.conf
+#export TSLIB_CONSOLEDEVICE=none
+export TSLIB_FBDEVICE=/dev/fb0
+export TSLIB_PLUGINDIR=/usr/lib/ts
+export TSLIB_TSDEVICE=/dev/input/event1
+
+#qt.qpa.input=true
+export QT_DEBUG_PLUGINS=1
+export QT_LOGGING_RULES=qt.qpa.*=true
+
+
+######new ####
+
+#export QT_QPA_EGLFS_WIDTH=800
+#export QT_QPA_EGLFS_HEIGHT=480
+#export QT_QPA_EGLFS_PHYSICAL_WIDTH=70
+#export QT_QPA_EGLFS_PHYSICAL_HEIGHT=44
+#export QT_QPA_EGLFS_DEPTH=24
+#export QT_QPA_EGLFS_ALWAYS_SET_MODE=1
+
+# Logging
+export QT_DEBUG_PLUGINS=1
+export QT_QPA_EGLFS_DEBUG=1
+#export QSG_INFO=1
+export QT_LOGGING_RULES=qt.qpa.*=true
+#export QT_EGL_MAX_PBUFFER_HEIGHT=480
+#export QT_EGL_MAX_PBUFFER_WIDTH=800
+#QT_QPA_EVDEV_MOUSE_PARAMETERS=abs
+#### new end #####
+export LD_PRELOAD="/opt/vc/lib/libGLESv2.so /opt/vc/lib/libEGL.so"
+export QT_QPA_EGLFS_DEPTH=24
+export LIBGL_DEBUG=verbose
+echo "bashrc load"
+
+run using
+./SmartSystemWebBrowser-QTQuick -plugin evdevmouse:/dev/input/event1
+
+----
+dial
+https://github.com/aterrien/jQuery-Knob
+http://www.jqueryscript.net/tags.php?/knob/
+---
+sun qt smart system programe
+1) create sh file on desktop "runqtSamrthome.sh" 
+
+# hides mouse cursor and disables EGL input
+# we can not use the built-in input handler because touch is not mouse, lol
+export QT_QPA_EGLFS_HIDECURSOR=1
+export QT_QPA_EGLFS_DISABLE_INPUT=1
+
+export TSLIB_TSEVENTTYPE=INPUT
+export TSLIB_CALIBFILE=/etc/pointercal
+export TSLIB_CONFFILE=/etc/ts.conf
+#export TSLIB_CONSOLEDEVICE=none
+export TSLIB_FBDEVICE=/dev/fb0
+export TSLIB_PLUGINDIR=/usr/lib/ts
+export TSLIB_TSDEVICE=/dev/input/event1
+
+export QT_DEBUG_PLUGINS=1
+export QT_LOGGING_RULES=qt.qpa.*=true
+
+
+# Logging
+export QT_DEBUG_PLUGINS=1
+export QT_QPA_EGLFS_DEBUG=1
+#export QSG_INFO=1
+export QT_LOGGING_RULES=qt.qpa.*=true
+#export QT_EGL_MAX_PBUFFER_HEIGHT=480
+#export QT_EGL_MAX_PBUFFER_WIDTH=800
+#QT_QPA_EVDEV_MOUSE_PARAMETERS=abs
+#### new end #####
+export LD_PRELOAD="/opt/vc/lib/libGLESv2.so /opt/vc/lib/libEGL.so"
+export QT_QPA_EGLFS_DEPTH=24
+export LIBGL_DEBUG=verbose
+if [ -z $qt_sh_load ]
+then
+        nohup /home/pi/SmartSystemWebBrowser-QTQuick -plugin evdevmouse:/dev/input/event1 &
+        export qt_sh_load=true
+else
+        echo "qt smart home alreaddy loaded!!!"
+fi
+
+
+2) AND add line in ~.bashrc
+/home/pi/runqtSamrthome.sh
+------------
