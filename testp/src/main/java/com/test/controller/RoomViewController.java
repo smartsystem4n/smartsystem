@@ -63,7 +63,7 @@ public class RoomViewController {
 
 	@RequestMapping("view/rooms")
 	public List<RoomViewDTO> allRooms() {
-		/*List<RoomViewDTO> roomViewDTOs = new ArrayList<RoomViewDTO>();
+	/*	List<RoomViewDTO> roomViewDTOs = new ArrayList<RoomViewDTO>();
 		List<Room> rooms = roomRepository.findAll();
 		if (rooms != null) {
 			for (Room room : rooms) {
@@ -88,8 +88,8 @@ public class RoomViewController {
 				roomViewDTOs.add(roomViewDTO);
 			}
 		}
-		return roomViewDTOs;*/
-		
+		return roomViewDTOs;
+		*/
 		return dummyRepository.getRoomViewDTOs();
 		
 	}

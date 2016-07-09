@@ -5,6 +5,7 @@ public abstract class Entity {
 	private String id;
 	private String label;
 	private int sequenceNo;
+	private int pinNo;
 	private String imagePath;
 
 	public String getImagePath() {
@@ -38,4 +39,13 @@ public abstract class Entity {
 	public void setSequenceNo(int sequenceNo) {
 		this.sequenceNo = sequenceNo;
 	}
+
+	public int getPinNo() {
+		return pinNo;
+	}
+
+	public void setPinNo(int pinNo) {
+		this.pinNo = pinNo;
+	}
+
 }
