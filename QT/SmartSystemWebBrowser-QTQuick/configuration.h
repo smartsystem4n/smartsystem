@@ -3,21 +3,26 @@
 #define PI
 #include <QObject>
 #include <QDebug>
-
+#include <QQuickView>
 class Configuration : public QObject
 {
-    QObject *screen ;
+    QQuickView *qQuickView ;
     Q_OBJECT
         Q_PROPERTY(QString url READ getUrl WRITE setUrl NOTIFY urlChanged)
+        Q_PROPERTY(QString generateClickV READ generateClick WRITE setGenerateClick)
 
 signals:
     void urlChanged();
 public:
-    Configuration(QObject *screen);
-    void generateClick();
+    Configuration();
+    Configuration(QQuickView *quickView);
+    QString generateClick();
     void setUrl(const QString &a) {
         // no need
     }
+    void setGenerateClick(const QString &a) {
+    }
+
     QString getUrl()
     {
         #ifdef PI
@@ -28,7 +33,7 @@ public:
         #else
 
             qDebug() << "NOT In PI" ;
-            return "http://www.google.com";
+            return "http://192.168.0.150:8080/MySmartHome-New/room25.jsp";
         #endif
     }
 

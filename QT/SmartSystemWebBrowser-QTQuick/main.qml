@@ -10,73 +10,59 @@ ApplicationWindow {
     //visibility: "FullScreen"
     width: 800
     height: 480
-    color: "#00000000"
+    color: "#000000"
+    //color: "#00000000"
     maximumWidth: 800
     maximumHeight: 480
     visible: true
     flags: Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint
-    //flags: Qt.SplashScreen
-    //    menuBar: MenuBar {
-    //        Menu {
-    //            title: qsTr("&File")
-    //            MenuItem {
-    //                text: qsTr("&Open")
-    //                onTriggered: messageDialog.show(qsTr("Open action triggered"));
-    //            }
-    //            MenuItem {
-    //                text: qsTr("E&xit")
-    //                onTriggered: Qt.quit();
-    //            }
-    //        }
-    //    }
-/* as some performance issue in webview while in raspberry pi I am usng out of out of box browser
-  to solver performance issue we need to enable GL Driver
- */
-        WebEngineView {
-            id: webviewScroll
-            //url: "http://127.0.0.1:8080/MySmartHome-New"
-            //url:"http://www.google.com"
-            url: configuration.url
-            anchors.fill: parent
-            width: parent.width
-            height: parent.height
 
-            MouseArea {
-                anchors.fill: parent
-                propagateComposedEvents:true
-                onClicked: {
-                    startTime=new Date().getTime()
-                    mouse.accepted = false
-                }
-                onPressed: {
-                    startTime=new Date().getTime()
-                    mouse.accepted = false
-                }
-                onReleased: {
-                    startTime=new Date().getTime()
-                    mouse.accepted = false
-                }
-                onDoubleClicked: {
-                    startTime=new Date().getTime()
-                    mouse.accepted = false
-                }
-                onPositionChanged: {
-                    startTime=new Date().getTime()
-                    mouse.accepted = false
-                }
-                onPressAndHold: {
-                    startTime=new Date().getTime()
-                    mouse.accepted = false
-                }
-            }
+    WebEngineView {
+        id: webviewScroll
+        visible: true
+        //url: "http://127.0.0.1:8080/MySmartHome-New"
+        //url:"http://www.google.com"
+        url: configuration.url
+        anchors.fill: parent
+        width: parent.width
+        height: parent.height
+    }
 
+    Image {
+        id: photoViewer
+        width: parent.width
+        height: parent.height
+        fillMode: Image.PreserveAspectFit
+        visible: false
+        source: "file://" + photoHelper.imagePath
+    }
+
+    MouseArea {
+        anchors.fill: parent
+        propagateComposedEvents:true
+        onClicked: {
+            handleClickeEventForPhotoViewer(mouse) ;
         }
-
-
+        onPressed: {
+            handleClickeEventForPhotoViewer(mouse) ;
+        }
+        onReleased: {
+            handleClickeEventForPhotoViewer(mouse) ;
+        }
+        onDoubleClicked: {
+            handleClickeEventForPhotoViewer(mouse) ;
+        }
+        onPositionChanged: {
+            handleClickeEventForPhotoViewer(mouse) ;
+        }
+        onPressAndHold: {
+            handleClickeEventForPhotoViewer(mouse) ;
+        }
+    }
     Item {
         Timer {
-            interval: 50000; running: true; repeat: true
-            onTriggered: {                
+            interval: 5000; running: true; repeat: true
+            onTriggered: {
                 time.text=startTime.toString();
                 if(new Date().getTime()-startTime > interval && parent.visible)
                 {
@@ -92,53 +78,22 @@ ApplicationWindow {
         Text { id: time }
     }
 
-    Image {
-        id: photoViewer
-        width: parent.width
-        height: parent.height
-        visible: false
-        source: "file://" + photoHelper.imagePath
-        MouseArea {
-            anchors.fill: parent
-            propagateComposedEvents:true
-            onClicked: {
-                hidePhotoViewer()
-                showWebviewScrol()
-                startTime=new Date().getTime()
-                mouse.accepted = false
-            }
-            onPressed: {
-                hidePhotoViewer()
-                showWebviewScrol()
-                startTime=new Date().getTime()
-                mouse.accepted = false
-            }
-            onReleased: {
-                hidePhotoViewer()
-                showWebviewScrol()
-                startTime=new Date().getTime()
-                mouse.accepted = false
-            }
-            onDoubleClicked: {
-                hidePhotoViewer()
-                showWebviewScrol()
-                startTime=new Date().getTime()
-                mouse.accepted = false
-            }
-            onPositionChanged: {
-                hidePhotoViewer()
-                showWebviewScrol()
-                startTime=new Date().getTime()
-                mouse.accepted = false
-            }
-            onPressAndHold: {
-                hidePhotoViewer()
-                showWebviewScrol()
-                startTime=new Date().getTime()
-                mouse.accepted = false
-            }
+    function handleClickeEventForPhotoViewer(mouse)
+    {
+        if(photoViewer.visible)
+        {
+            hidePhotoViewer()
+            showWebviewScrol()
+            startTime=new Date().getTime()
         }
+        else
+        {
+            startTime=new Date().getTime()
+        }
+        mouse.accepted = false
     }
+
+
     function hidePhotoViewer()
     {
         photoViewer.visible=false

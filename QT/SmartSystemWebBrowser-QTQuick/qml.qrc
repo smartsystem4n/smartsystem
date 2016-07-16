@@ -5,6 +5,6 @@
         <file>Splash.qml</file>
         <file>creative_brain_animated---Copy---Copy-new.gif</file>
         <file>qt-logo.png</file>
-        <file>main.qml</file>
+        <file>Main.qml</file>
     </qresource>
 </RCC>

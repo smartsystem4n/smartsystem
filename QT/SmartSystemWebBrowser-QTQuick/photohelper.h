@@ -22,7 +22,7 @@ class PhotoHelper : public QObject
         QString next() {
             emit imagePathChanged() ;
             count++;
-            qDebug() << imagePaths.at(count%imagePaths.length()) ;
+//            qDebug() << imagePaths.at(count%imagePaths.length()) ;
             return imagePaths.at(count%imagePaths.length());
         }
         QString privious() {
@@ -32,7 +32,7 @@ class PhotoHelper : public QObject
             {
                 count*=-1 ;
             }
-            qDebug() << imagePaths.at(count%imagePaths.length()) ;
+//            qDebug() << imagePaths.at(count%imagePaths.length()) ;
             return imagePaths.at(count%imagePaths.length());
         }
 
