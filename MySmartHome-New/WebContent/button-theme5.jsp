@@ -7,12 +7,14 @@
 	<div class="row">
 		<div class="col-xs-6 text-center">
 			<div id="room1BtnLight1" >
-				<img src="resources/img/lightingalt_white48px.png" class="smartHomeAction" border="5"/>
+				<button  class="light smartHomeAction light-off">
+				</button>
 			</div>
 		</div>
 		<div class="col-xs-6 text-center">
 			<div id="room1BtnLight2">
-				<img src="resources/img/lightingalt_white48px.png" class="smartHomeAction" border="5"/>
+				<button  class="light smartHomeAction light-off">
+				</button>
 			</div>
 		</div>
 	</div>
@@ -20,27 +22,29 @@
 	<div class="row">
 		<div class="col-xs-6 text-center">
 			<div id="room1BtnLight3">
-				<img src="resources/img/lightingalt_white48px.png" class="smartHomeAction" border="5"/>
+				<button  class="light smartHomeAction light-off">
+				</button>
 			</div>
 		</div>
 		<div class="col-xs-6 text-center">
 			<div id="room1BtnFan1">
 				<div class="row">
-					<img src="resources/img/myfan.png" class="smartHomeAction" border="5"/>
+					<button  class="fan smartHomeAction fan-off">
+					</button>
 				</div>
 				<div class="row">
-					<div class="col-xs-3 text-center fanSpeed smartHomeAction" style="font-size:40px">
+					<button class="col-xs-3 text-center fanSpeed smartHomeAction" style="border: 0; background: transparent;font-size:40px">
 						&nbsp;&nbsp;1&nbsp;&nbsp;
-					</div>
-					<div class="col-xs-3 text-center fanSpeed smartHomeAction" style="font-size:40px">
+					</button>
+					<button class="col-xs-3 text-center fanSpeed smartHomeAction" style="border: 0; background: transparent;font-size:40px">
 						&nbsp;&nbsp;2&nbsp;&nbsp;
-					</div>
-					<div class="col-xs-3 text-center fanSpeed smartHomeAction" style="font-size:40px">
+					</button>
+					<button class="col-xs-3 text-center fanSpeed smartHomeAction" style="border: 0; background: transparent;font-size:40px">
 						&nbsp;&nbsp;3&nbsp;&nbsp;
-					</div>
-					<div class="col-xs-3 text-center fanSpeed smartHomeAction" style="font-size:40px">
+					</button>
+					<button class="col-xs-3 text-center fanSpeed smartHomeAction" style="border: 0; background: transparent;font-size:40px">
 						&nbsp;&nbsp;4&nbsp;&nbsp;
-					</div>
+					</button>
 				</div>
 			</div>			
 		</div>

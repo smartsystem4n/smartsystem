@@ -22,10 +22,12 @@
 				var $this = $(this);
 				$this.data(settingsObject);
 
-				$this.find('.smartHomeAction').on(
+				//$this.find('.smartHomeAction').on(
+				$this.find('button').on(
 						'click',
 						function(event) {
 							//console.log(state); // true | false
+							
 							var state = $(this).data("state");
 							if(!$(this).hasClass("fanSpeed"))
 							{
@@ -172,15 +174,19 @@ function updateLightRoom1(light)
 	// var lbl = btn + "Label";
 	// $('#' + div).show();
 	// $('#' + lbl).html(light.label);
-	$('#' + btn).find("img").data("devId", light.id).data('devType', 'light');
+	$('#' + btn).find(".light").data("devId", light.id).data('devType', 'light');
 	if (isDefined(light.state) && light.state == 'ON') {
 		// $('#' + btn).bootstrapSwitch('state', true);
-		$('#' + btn).find("img").attr("src","resources/img/lighting_white48px.png");
-		$('#' + btn).find("img").data("state",false);// next stage
+		//$('#' + btn).find("button").attr("src","resources/img/lighting_white48px.png");
+		$('#' + btn).find("button").addClass("light-on");
+		$('#' + btn).find("button").removeClass("light-off");
+		$('#' + btn).find("button").data("state",false);// next stage
 	} else {
 		// $('#' + btn).bootstrapSwitch('state', false);
-		$('#' + btn).find("img").attr("src","resources/img/lightingalt_white48px.png");
-		$('#' + btn).find("img").data("state",true);// next stage
+		//$('#' + btn).find("button").attr("src","resources/img/lightingalt_white48px.png");
+		$('#' + btn).find("button").addClass("light-off");
+		$('#' + btn).find("button").removeClass("light-on");
+		$('#' + btn).find("button").data("state",true);// next stage
 	}
 }
 
@@ -192,16 +198,20 @@ function updateFanRoom1(fan)
 	var lbl = btn + "Label";
 	// $('#' + div).show();
 	// $('#' + lbl).html(fan.label);
-	$('#' + btn).find("img").data("devId", fan.id).data('devType', 'fan');
+	$('#' + btn).find(".fan").data("devId", fan.id).data('devType', 'fan');
 	$('#' + btn).find(".fanSpeed").data("devId", fan.id).data('devType', 'fanSpeed');
 	if (isDefined(fan.state) && fan.state == 'ON') {
 		// $('#' + btn).bootstrapSwitch('state', true);					
-		$('#' + btn).find("img").attr("src","resources/img/myfan.gif");
-		$('#' + btn).find("img").data("state",false);// next stage
+		//$('#' + btn).find("button").attr("src","resources/img/myfan.gif");
+		$('#' + btn).find("button").addClass("fan-on");
+		$('#' + btn).find("button").removeClass("fan-off");
+		$('#' + btn).find("button").data("state",false);// next stage
 	} else {
 		// $('#' + btn).bootstrapSwitch('state', false);					
-		$('#' + btn).find("img").attr("src","resources/img/myfan.png");
-		$('#' + btn).find("img").data("state",true);// next stage
+		//$('#' + btn).find("button").attr("src","resources/img/myfan.png");
+		$('#' + btn).find("button").addClass("fan-off");
+		$('#' + btn).find("button").removeClass("fan-on");
+		$('#' + btn).find("button").data("state",true);// next stage
 	}	
 }
 

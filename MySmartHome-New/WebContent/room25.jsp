@@ -15,7 +15,7 @@
 	type="text/css">
 <link href="resources/css/bootswatch/slate/bootstrap.css"
 	rel="stylesheet" type="text/css" />
-
+<link href="resources/css/button-light-fan.css" rel="stylesheet" type="text/css" />
 
 <link rel="stylesheet" href="resources/css/toggles-full.css">
 

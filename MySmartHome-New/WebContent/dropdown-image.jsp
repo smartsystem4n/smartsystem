@@ -1,4 +1,4 @@
-<div class="btn-group btn-sm btn-xs">
+<div class="btn-group btn-sm btn-xs col-xs-2">
 	<a aria-expanded="true" href="#"
 		class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
 		Dropdown <span class="caret"></span>
