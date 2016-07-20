@@ -60,10 +60,14 @@ public class DummyRepository {
 		fan.setState(State.OFF);
 		fan.setMode(Mode.ONE);
 		fan.setSequenceNo(1);
-		fan.setPinNo(4);
-		fan.setPin2(5);
-		fan.setPin3(6);
-		fan.setPin4(7);
+//		fan.setPinNo(4);
+//		fan.setPin2(5);
+//		fan.setPin3(6);
+//		fan.setPin4(7);
+		fan.setPinNo(7);
+		fan.setPin2(6);
+		fan.setPin3(5);
+		fan.setPin4(4);
 		room1Fans.add(fan);
 
 		RoomViewDTO roomViewDTO = new RoomViewDTO();

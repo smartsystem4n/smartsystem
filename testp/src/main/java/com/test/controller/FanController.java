@@ -55,26 +55,9 @@ public class FanController {
 		Fan fan = dummyRepository.getFan(id);
 		if ("ON".equals(state)) {
 			fan.setState(State.ON);
-			System.out.println("pin = " + fan.getPinNo() + " isOn = " + "ON" + "command = " + EXE_CMD + fan.getPinNo() + " " + "ON") ;
-			
-			/*try {
-				Runtime.getRuntime().exec(EXE_CMD + fan.getPinNo() + " " + "ON");		
-				updateFanSpped(fan);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			*/
 			updateFanSpped(fan);
 		} else {
 			fan.setState(State.OFF);
-			System.out.println("pin = " + fan.getPinNo() + " isOn = " + "OFF" + "command = " + EXE_CMD + fan.getPinNo() + " " + "OFF") ;
-			/*try {
-				Runtime.getRuntime().exec(EXE_CMD + fan.getPinNo() + " " + "OFF");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}*/
 			updateFanSpped(fan);
 		}
 		return fan;
@@ -88,22 +71,22 @@ public class FanController {
 		System.out.println("in fan speed contoller ");
 		if("1".equals(speed))
 		{
-			System.out.println("speed 1");
+//			System.out.println("speed 1");
 			fan.setMode(Mode.ONE);
 		}
 		else if("2".equals(speed))
 		{
-			System.out.println("speed 2");
+//			System.out.println("speed 2");
 			fan.setMode(Mode.TWO);
 		}
 		else if("3".equals(speed))
 		{
-			System.out.println("speed 3");
+//			System.out.println("speed 3");
 			fan.setMode(Mode.THREE);
 		}
 		else if("4".equals(speed))
 		{
-			System.out.println("speed 4");
+//			System.out.println("speed 4");
 			fan.setMode(Mode.FOUR);
 		}
 		updateFanSpped(fan);
@@ -119,13 +102,13 @@ public class FanController {
 		if (State.ON.equals(fan.getState())) {
 			if(fan.getMode().equals(Mode.ONE))
 			{
-				System.out.println("pin = " + fan.getPinNo() + " isOn = " + "ON" + "command = " + EXE_CMD + fan.getPinNo() + " " + "ON") ;
+//				System.out.println("pin = " + fan.getPinNo() + " isOn = " + "ON" + "command = " + EXE_CMD + fan.getPinNo() + " " + "ON") ;
 				try 
 				{
-					Runtime.getRuntime().exec(EXE_FAN_CMD + fan.getPinNo() + " " + "OFF");
-					Runtime.getRuntime().exec(EXE_FAN_CMD + fan.getPin2() + " " + "ON");
-					Runtime.getRuntime().exec(EXE_FAN_CMD + fan.getPin3() + " " + "OFF");
-					Runtime.getRuntime().exec(EXE_FAN_CMD + fan.getPin4() + " " + "OFF");
+					Runtime.getRuntime().exec(EXE_FAN_CMD + fan.getPinNo() + " " + "ON");
+					Runtime.getRuntime().exec(EXE_FAN_CMD + fan.getPin2() + " " + "OFF");
+					Runtime.getRuntime().exec(EXE_FAN_CMD + fan.getPin3() + " " + "ON");
+					Runtime.getRuntime().exec(EXE_FAN_CMD + fan.getPin4() + " " + "ON");
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -133,13 +116,13 @@ public class FanController {
 			}
 			if(fan.getMode().equals(Mode.TWO))
 			{
-				System.out.println("pin = " + fan.getPinNo() + " isOn = " + "ON" + "command = " + EXE_CMD + fan.getPinNo() + " " + "ON") ;
+//				System.out.println("pin = " + fan.getPinNo() + " isOn = " + "ON" + "command = " + EXE_CMD + fan.getPinNo() + " " + "ON") ;
 				try 
 				{
-					Runtime.getRuntime().exec(EXE_FAN_CMD + fan.getPinNo() + " " + "ON");
-					Runtime.getRuntime().exec(EXE_FAN_CMD + fan.getPin2() + " " + "OFF");
-					Runtime.getRuntime().exec(EXE_FAN_CMD + fan.getPin3() + " " + "OFF");
-					Runtime.getRuntime().exec(EXE_FAN_CMD + fan.getPin4() + " " + "OFF");
+					Runtime.getRuntime().exec(EXE_FAN_CMD + fan.getPinNo() + " " + "OFF");
+					Runtime.getRuntime().exec(EXE_FAN_CMD + fan.getPin2() + " " + "ON");
+					Runtime.getRuntime().exec(EXE_FAN_CMD + fan.getPin3() + " " + "ON");
+					Runtime.getRuntime().exec(EXE_FAN_CMD + fan.getPin4() + " " + "ON");
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -147,13 +130,13 @@ public class FanController {
 			}
 			if(fan.getMode().equals(Mode.THREE))
 			{
-				System.out.println("pin = " + fan.getPinNo() + " isOn = " + "ON" + "command = " + EXE_CMD + fan.getPinNo() + " " + "ON") ;
+//				System.out.println("pin = " + fan.getPinNo() + " isOn = " + "ON" + "command = " + EXE_CMD + fan.getPinNo() + " " + "ON") ;
 				try 
 				{
-					Runtime.getRuntime().exec(EXE_FAN_CMD + fan.getPinNo() + " " + "ON");
-					Runtime.getRuntime().exec(EXE_FAN_CMD + fan.getPin2() + " " + "ON");
-					Runtime.getRuntime().exec(EXE_FAN_CMD + fan.getPin3() + " " + "OFF");
-					Runtime.getRuntime().exec(EXE_FAN_CMD + fan.getPin4() + " " + "OFF");
+					Runtime.getRuntime().exec(EXE_FAN_CMD + fan.getPinNo() + " " + "OFF");
+					Runtime.getRuntime().exec(EXE_FAN_CMD + fan.getPin2() + " " + "OFF");
+					Runtime.getRuntime().exec(EXE_FAN_CMD + fan.getPin3() + " " + "ON");
+					Runtime.getRuntime().exec(EXE_FAN_CMD + fan.getPin4() + " " + "ON");
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -161,13 +144,13 @@ public class FanController {
 			}
 			if(fan.getMode().equals(Mode.FOUR))
 			{
-				System.out.println("pin = " + fan.getPinNo() + " isOn = " + "ON" + "command = " + EXE_CMD + fan.getPinNo() + " " + "ON") ;
+//				System.out.println("pin = " + fan.getPinNo() + " isOn = " + "ON" + "command = " + EXE_CMD + fan.getPinNo() + " " + "ON") ;
 				try 
 				{
-					Runtime.getRuntime().exec(EXE_FAN_CMD + fan.getPinNo() + " " + "ON");
-					Runtime.getRuntime().exec(EXE_FAN_CMD + fan.getPin2() + " " + "ON");
-					Runtime.getRuntime().exec(EXE_FAN_CMD + fan.getPin3() + " " + "ON");
-					Runtime.getRuntime().exec(EXE_FAN_CMD + fan.getPin4() + " " + "ON");
+					Runtime.getRuntime().exec(EXE_FAN_CMD + fan.getPinNo() + " " + "OFF");
+					Runtime.getRuntime().exec(EXE_FAN_CMD + fan.getPin2() + " " + "OFF");
+					Runtime.getRuntime().exec(EXE_FAN_CMD + fan.getPin3() + " " + "OFF");
+					Runtime.getRuntime().exec(EXE_FAN_CMD + fan.getPin4() + " " + "OFF");
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -178,10 +161,10 @@ public class FanController {
 		{
 			try 
 			{
-				Runtime.getRuntime().exec(EXE_FAN_CMD + fan.getPinNo() + " " + "OFF");
-				Runtime.getRuntime().exec(EXE_FAN_CMD + fan.getPin2() + " " + "OFF");
-				Runtime.getRuntime().exec(EXE_FAN_CMD + fan.getPin3() + " " + "OFF");
-				Runtime.getRuntime().exec(EXE_FAN_CMD + fan.getPin4() + " " + "OFF");
+				Runtime.getRuntime().exec(EXE_FAN_CMD + fan.getPinNo() + " " + "ON");
+				Runtime.getRuntime().exec(EXE_FAN_CMD + fan.getPin2() + " " + "ON");
+				Runtime.getRuntime().exec(EXE_FAN_CMD + fan.getPin3() + " " + "ON");
+				Runtime.getRuntime().exec(EXE_FAN_CMD + fan.getPin4() + " " + "ON");
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

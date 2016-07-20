@@ -57,7 +57,7 @@ public class LightController {
 		Light light = dummyRepository.getLight(id);
 		if ("ON".equals(state)) {
 			light.setState(State.ON);
-			System.out.println("pin = " + light.getPinNo() + " isOn = " + "ON" + "command = " + EXE_CMD + light.getPinNo() + " " + "ON") ;
+//			System.out.println("pin = " + light.getPinNo() + " isOn = " + "ON" + "command = " + EXE_CMD + light.getPinNo() + " " + "ON") ;
 			try {
 				Runtime.getRuntime().exec(EXE_CMD + light.getPinNo() + " " + "ON");
 				
@@ -67,7 +67,7 @@ public class LightController {
 			}
 		} else {
 			light.setState(State.OFF);
-			System.out.println("pin = " + light.getPinNo() + " isOn = " + "OFF" + "command = " + EXE_CMD + light.getPinNo() + " " + "OFF") ;
+//			System.out.println("pin = " + light.getPinNo() + " isOn = " + "OFF" + "command = " + EXE_CMD + light.getPinNo() + " " + "OFF") ;
 			try {
 				Runtime.getRuntime().exec(EXE_CMD + light.getPinNo() + " " + "OFF");
 			} catch (IOException e) {
