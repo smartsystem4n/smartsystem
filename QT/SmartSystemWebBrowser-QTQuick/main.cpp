@@ -10,7 +10,6 @@
 #include<photohelper.h>
 #include<configuration.h>
 #include <qtwebengineglobal.h>
-#include <qtwebenginecoreglobal.h>
 #include <QQuickView>
 #include <QThread>
 static QProcess browser ;
@@ -38,8 +37,6 @@ int main(int argc, char *argv[])
         qDebug() << component.errorString();
     }
     qDebug() << "component created" ;
-    QThread::sleep(10);
-    qDebug() << "sleep done" ;
     app.exec();
 
 /*
